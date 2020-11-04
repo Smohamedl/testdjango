@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+<form method="post" action="{% url 'login_action' %}">
+{% csrf_token %}
+<input type="text" id="username" class="fadeIn second" name="username" placeholder="username">
+<input type="password" id="password" class="fadeIn second" name="password" placeholder="password">
+
+<input type="submit" value="login">
+<input type="hidden" name="next" value="{{ next }}">
+</form>
+
+<p> Not registered yet? <a href="{% url 'register' %}"  class="underlineHover" >Create an account</a> </p>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if errors %}
+<p>There was a problem with your input data. Please try again.</p>
+{% endif %}
+
+<form>
+  {% csrf_token %}
+<input type="email" id="email" class="fadeIn second" name="email" placeholder="email" value='{{email}}'>
+<input type="text" id="first_name" class="fadeIn second" name="first_name" placeholder="first_name" value='{{first_name}}'>
+<input type="text" id="last_name" class="fadeIn second" name="last_name" placeholder="last_name" value='{{last_name}}'>
+
+<input type="button" value="update" id="update">
+</form>
+
+<a href='/user/home' >back to home</a>
+
+<script>
+    $(document).ready(function(){
+
+        $('#update').on('click', function(e){
+            //Stop the form from submitting itself to the server.
+            var email = $('#email').val();
+            var firstName = $('#first_name').val();
+            var lastName = $('#last_name').val();
+            const csrftoken = getCookie('csrftoken');
+            $.ajax({
+                type: "POST",
+                url: "/user/update_action",
+                data: {email: email, first_name: firstName, last_name: lastName},
+                headers: {'X-CSRFToken': csrftoken},
+                success: function(data){
+                    alert("User data updated successfully")
+                }
+            });
+        });
+    });
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+
+{% endblock %}

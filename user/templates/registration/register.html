@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if errors %}
+<p>There was a problem with your input data. Please try again.</p>
+{% endif %}
+
+<form method="post" action="{% url 'register_action' %}">
+  {% csrf_token %}
+  <input type="text" id="username" class="fadeIn second" name="username" placeholder="username">
+  <input type="password" id="password" class="fadeIn second" name="password" placeholder="password">
+  <input type="email" id="email" class="fadeIn second" name="email" placeholder="email">
+  <input type="text" id="first_name" class="fadeIn second" name="first_name" placeholder="first name">
+  <input type="text" id="last_name" class="fadeIn second" name="last_name" placeholder="last name">
+
+  <input type="submit" value="submit" id="submit">
+</form>
+
+<a href='{% url "index" %}' >back to login page</a>
+
+</script>
+
+{% endblock %}
